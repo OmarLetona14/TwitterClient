@@ -1,9 +1,13 @@
 package omarletona.org.twitterclient.images;
 
+import android.util.Log;
+
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Result;
 import com.twitter.sdk.android.core.TwitterException;
+import com.twitter.sdk.android.core.models.HashtagEntity;
 import com.twitter.sdk.android.core.models.MediaEntity;
+import com.twitter.sdk.android.core.models.Search;
 import com.twitter.sdk.android.core.models.Tweet;
 
 import java.util.ArrayList;
@@ -12,9 +16,11 @@ import java.util.Comparator;
 import java.util.List;
 
 import omarletona.org.twitterclient.api.CustomTwitterApiClient;
+import omarletona.org.twitterclient.hashtags.entities.CustomTweet;
 import omarletona.org.twitterclient.images.entities.Image;
 import omarletona.org.twitterclient.images.events.ImagesEvent;
 import omarletona.org.twitterclient.lib.base.EventBus;
+import omarletona.org.twitterclient.main.ui.MainActivity;
 
 /**
  * Created by Omar on 07/07/2016.
@@ -23,6 +29,7 @@ public class ImagesRepositoryImpl implements ImageRepository {
     private final EventBus eventBus;
     private final CustomTwitterApiClient client;
     private final static int TWEET_COUNT = 100;
+    private String searchText;
 
     public ImagesRepositoryImpl(CustomTwitterApiClient client, EventBus eventBus) {
         this.client = client;
@@ -30,7 +37,47 @@ public class ImagesRepositoryImpl implements ImageRepository {
     }
 
     public void getImages() {
-        client.getTimelineService().homeTimeline(TWEET_COUNT, true, true, true, true,
+        searchText = MainActivity.getSearch();
+        client.getSearchService().tweets(searchText, null, null, null, null, null, null,null, null, null,
+                new Callback<Search>() {
+
+                    @Override
+                    public void success(Result<Search> result) {
+                        List<CustomTweet> items = new ArrayList<CustomTweet>();
+                        List<Tweet> tweets = result.data.tweets;
+                        for (Tweet tweet: tweets){
+                            if (checkIfTweetHasImage(tweet)) {
+                                CustomTweet tweetModel = new CustomTweet();
+
+                                tweetModel.setId(tweet.idStr);
+                                tweetModel.setTweetText(tweet.text);
+                                tweetModel.setImageURL(tweet.source);
+                                tweetModel.setFavoriteCount(tweet.favoriteCount);
+
+                                MediaEntity currentPhoto = tweet.entities.media.get(0);
+                                String imageURL = currentPhoto.mediaUrl;
+                                tweetModel.setImageURL(imageURL);
+
+                                List<String> hashtags = new ArrayList<String>();
+                                for (HashtagEntity hashtag : tweet.entities.hashtags) {
+                                    hashtags.add(hashtag.text);
+                                }
+                                tweetModel.setHashtags(hashtags);
+
+                                items.add(tweetModel);
+                            }
+
+                        }
+                        postEvent(items);
+                    }
+
+                    @Override
+                    public void failure(TwitterException e) {
+                        Log.e("Fallo", "Error al recibir los datos");
+                    }
+                });
+
+       /* client.getTimelineService().homeTimeline(TWEET_COUNT, true, true, true, true,
                 new Callback<List<Tweet>>() {
                     @Override
                     public void success(Result<List<Tweet>> result) {
@@ -70,7 +117,7 @@ public class ImagesRepositoryImpl implements ImageRepository {
                         postEvent(e.getMessage());
                     }
                 }
-        );
+        );*/
     }
 
     private boolean checkIfTweetHasImage(Tweet tweet) {
@@ -85,9 +132,10 @@ public class ImagesRepositoryImpl implements ImageRepository {
         eventBus.post(event);
     }
 
-    private void postEvent(List<Image> items) {
+    private void postEvent(List<CustomTweet> items) {
         ImagesEvent event = new ImagesEvent();
         event.setImages(items);
         eventBus.post(event);
     }
+
 }

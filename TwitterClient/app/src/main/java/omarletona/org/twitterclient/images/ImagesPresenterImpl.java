@@ -4,6 +4,7 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
+import omarletona.org.twitterclient.hashtags.entities.CustomTweet;
 import omarletona.org.twitterclient.images.entities.Image;
 import omarletona.org.twitterclient.images.events.ImagesEvent;
 import omarletona.org.twitterclient.images.ui.ImagesView;
@@ -58,7 +59,7 @@ public class ImagesPresenterImpl implements ImagesPresenter{
             if (errorMsg != null) {
                 this.imagesView.onError(errorMsg);
             } else {
-                List<Image> items = event.getImages();
+                List<CustomTweet> items = event.getImages();
                 if (items != null && !items.isEmpty()) {
                     this.imagesView.setContent(items);
                 }

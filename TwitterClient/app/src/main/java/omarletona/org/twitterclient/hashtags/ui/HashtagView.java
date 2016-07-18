@@ -2,6 +2,7 @@ package omarletona.org.twitterclient.hashtags.ui;
 
 import java.util.List;
 
+import omarletona.org.twitterclient.hashtags.entities.CustomTweet;
 import omarletona.org.twitterclient.hashtags.entities.Hashtag;
 
 /**
@@ -15,5 +16,5 @@ public interface HashtagView {
     void hideProgress();
 
     void onHashtagsError(String error);
-    void setContent(List<Hashtag> items);
+    void setContent(List<CustomTweet> items);
 }

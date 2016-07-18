@@ -4,6 +4,7 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
+import omarletona.org.twitterclient.hashtags.entities.CustomTweet;
 import omarletona.org.twitterclient.hashtags.entities.Hashtag;
 import omarletona.org.twitterclient.hashtags.events.HashtagsEvent;
 import omarletona.org.twitterclient.hashtags.ui.HashtagView;
@@ -57,7 +58,7 @@ public class HashtagPresenterImpl implements HashtagPresenter {
             if (errorMsg != null) {
                 this.hashtagsView.onHashtagsError(errorMsg);
             } else {
-                List<Hashtag> items = event.getHashtags();
+                List<CustomTweet> items = event.getHashtags();
                 if (items != null && !items.isEmpty()) {
                     this.hashtagsView.setContent(items);
                 }

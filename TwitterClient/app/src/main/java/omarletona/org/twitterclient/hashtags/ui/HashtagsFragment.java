@@ -26,7 +26,9 @@ import omarletona.org.twitterclient.TwitterClientApp;
 import omarletona.org.twitterclient.hashtags.HashtagPresenter;
 import omarletona.org.twitterclient.hashtags.adapters.HashtagsAdapter;
 import omarletona.org.twitterclient.hashtags.di.HashtagComponent;
+import omarletona.org.twitterclient.hashtags.entities.CustomTweet;
 import omarletona.org.twitterclient.hashtags.entities.Hashtag;
+import omarletona.org.twitterclient.main.ui.MainActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -70,8 +72,12 @@ public class HashtagsFragment extends Fragment implements HashtagView, OnItemCli
 
         setupInjection();
         setupRecyclerView();
+        if(MainActivity.search != null && MainActivity.search != ""){
+            hashtagsPresenter.getHashtagTweets();
+        }else{
+            Snackbar.make(container, "Por favor, introduzca una busqueda", Snackbar.LENGTH_LONG).show();
+        }
 
-        hashtagsPresenter.getHashtagTweets();
         return view;
     }
 
@@ -94,7 +100,7 @@ public class HashtagsFragment extends Fragment implements HashtagView, OnItemCli
     }
 
     @Override
-    public void setContent(List<Hashtag> items) {
+    public void setContent(List<CustomTweet> items) {
         adapter.setItems(items);
     }
 
@@ -119,7 +125,7 @@ public class HashtagsFragment extends Fragment implements HashtagView, OnItemCli
     }
 
     @Override
-    public void onItemClick(Hashtag tweet) {
+    public void onItemClick(CustomTweet tweet) {
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(tweet.getTweetURL()));
         startActivity(intent);
     }

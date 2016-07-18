@@ -25,6 +25,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import omarletona.org.twitterclient.R;
 import omarletona.org.twitterclient.TwitterClientApp;
+import omarletona.org.twitterclient.hashtags.entities.CustomTweet;
 import omarletona.org.twitterclient.images.ImagesPresenter;
 import omarletona.org.twitterclient.images.adapters.ImagesAdapter;
 import omarletona.org.twitterclient.images.adapters.OnItemClickListener;
@@ -32,6 +33,7 @@ import omarletona.org.twitterclient.images.di.ImagesComponent;
 import omarletona.org.twitterclient.images.di.ImagesModule;
 import omarletona.org.twitterclient.images.entities.Image;
 import omarletona.org.twitterclient.lib.di.LibsModule;
+import omarletona.org.twitterclient.main.ui.MainActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -84,7 +86,11 @@ public class ImagesFragment extends Fragment implements ImagesView, OnItemClickL
 
         setupInjection();
         setupRecyclerView();
-        imagesPresenter.getImageTweets();
+        if(MainActivity.search != null && MainActivity.search != ""){
+            imagesPresenter.getImageTweets();
+        }else{
+            Snackbar.make(container, "Por favor, introduzca una busqueda", Snackbar.LENGTH_LONG).show();
+        }
 
         return view;
     }
@@ -126,12 +132,12 @@ public class ImagesFragment extends Fragment implements ImagesView, OnItemClickL
     }
 
     @Override
-    public void setContent(List<Image> items) {
+    public void setContent(List<CustomTweet> items) {
         adapter.setItems(items);
     }
 
     @Override
-    public void onItemClick(Image image) {
+    public void onItemClick(CustomTweet image) {
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(image.getTweetURL()));
         startActivity(intent);
     }

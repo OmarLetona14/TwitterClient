@@ -11,6 +11,7 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import omarletona.org.twitterclient.api.CustomTwitterApiClient;
+import omarletona.org.twitterclient.hashtags.entities.CustomTweet;
 import omarletona.org.twitterclient.images.ImageRepository;
 import omarletona.org.twitterclient.images.ImagesInteractor;
 import omarletona.org.twitterclient.images.ImagesInteractorImpl;
@@ -39,8 +40,8 @@ public class ImagesModule {
 
     @Provides
     @Singleton
-    List<Image> provideItems() {
-        return new ArrayList<Image>();
+    List<CustomTweet> provideItems() {
+        return new ArrayList<CustomTweet>();
     }
 
     @Provides
@@ -50,7 +51,7 @@ public class ImagesModule {
     }
 
     @Provides
-    ImagesAdapter provideAdapter(List<Image> items, OnItemClickListener clickListener, ImageLoader imageLoader) {
+    ImagesAdapter provideAdapter(List<CustomTweet> items, OnItemClickListener clickListener, ImageLoader imageLoader) {
         return new ImagesAdapter(items, clickListener, imageLoader);
     }
 

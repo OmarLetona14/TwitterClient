@@ -13,6 +13,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import omarletona.org.twitterclient.R;
+import omarletona.org.twitterclient.hashtags.entities.CustomTweet;
 import omarletona.org.twitterclient.images.entities.Image;
 import omarletona.org.twitterclient.lib.base.ImageLoader;
 
@@ -20,11 +21,11 @@ import omarletona.org.twitterclient.lib.base.ImageLoader;
  * Created by Omar on 07/07/2016.
  */
 public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ViewHolder> {
-    private List<Image> items;
+    private List<CustomTweet> items;
     private ImageLoader imageLoader;
     private OnItemClickListener clickListener;
 
-    public ImagesAdapter(List<Image> items,
+    public ImagesAdapter(List<CustomTweet> items,
                          OnItemClickListener clickListener,
                          ImageLoader imageLoader) {
         this.items = items;
@@ -40,7 +41,7 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Image imageTweet = items.get(position);
+        CustomTweet imageTweet = items.get(position);
         holder.setOnClickListener(imageTweet, clickListener);
         holder.txtTweet.setText(imageTweet.getTweetText());
         imageLoader.load(holder.imgMedia, imageTweet.getImageURL());
@@ -51,7 +52,7 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ViewHolder
         return items.size();
     }
 
-    public void setItems(List<Image> newItems) {
+    public void setItems(List<CustomTweet> newItems) {
         items.addAll(newItems);
         notifyDataSetChanged();
     }
@@ -70,7 +71,7 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ViewHolder
             this.view = view;
         }
 
-        public void setOnClickListener(final Image image,
+        public void setOnClickListener(final CustomTweet image,
                                      final OnItemClickListener listener) {
             view.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -2,6 +2,7 @@ package omarletona.org.twitterclient.hashtags.events;
 
 import java.util.List;
 
+import omarletona.org.twitterclient.hashtags.entities.CustomTweet;
 import omarletona.org.twitterclient.hashtags.entities.Hashtag;
 
 /**
@@ -9,7 +10,7 @@ import omarletona.org.twitterclient.hashtags.entities.Hashtag;
  */
 public class HashtagsEvent {
     private String error;
-    private List<Hashtag> hashtags;
+    private List<CustomTweet> tweets;
 
     public String getError() {
         return error;
@@ -19,11 +20,11 @@ public class HashtagsEvent {
         this.error = error;
     }
 
-    public List<Hashtag> getHashtags() {
-        return hashtags;
+    public List<CustomTweet> getHashtags() {
+        return tweets;
     }
 
-    public void setHashtags(List<Hashtag> hashtags) {
-        this.hashtags = hashtags;
+    public void setHashtags(List<CustomTweet> hashtags) {
+        this.tweets = hashtags;
     }
 }

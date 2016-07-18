@@ -2,6 +2,7 @@ package omarletona.org.twitterclient.images.events;
 
 import java.util.List;
 
+import omarletona.org.twitterclient.hashtags.entities.CustomTweet;
 import omarletona.org.twitterclient.images.entities.Image;
 
 /**
@@ -9,7 +10,7 @@ import omarletona.org.twitterclient.images.entities.Image;
  */
 public class ImagesEvent {
     private String error;
-    private List<Image> images;
+    private List<CustomTweet> images;
 
     public String getError() {
         return error;
@@ -19,11 +20,11 @@ public class ImagesEvent {
         this.error = error;
     }
 
-    public List<Image> getImages() {
+    public List<CustomTweet> getImages() {
         return images;
     }
 
-    public void setImages(List<Image> images) {
+    public void setImages(List<CustomTweet> images) {
         this.images = images;
     }
 }

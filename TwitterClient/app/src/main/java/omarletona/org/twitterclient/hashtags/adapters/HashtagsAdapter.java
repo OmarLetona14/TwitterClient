@@ -13,6 +13,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import omarletona.org.twitterclient.R;
+import omarletona.org.twitterclient.hashtags.entities.CustomTweet;
 import omarletona.org.twitterclient.hashtags.entities.Hashtag;
 import omarletona.org.twitterclient.hashtags.ui.CustomGridLayoutManager;
 import omarletona.org.twitterclient.hashtags.ui.OnItemClickListener;
@@ -22,10 +23,10 @@ import omarletona.org.twitterclient.hashtags.ui.OnItemClickListener;
  */
 public class HashtagsAdapter extends RecyclerView.Adapter<HashtagsAdapter.ViewHolder> {
 
-    private List<Hashtag> items;
+    private List<CustomTweet> items;
     private OnItemClickListener clickListener;
 
-    public HashtagsAdapter(List<Hashtag> items,
+    public HashtagsAdapter(List<CustomTweet> items,
                            OnItemClickListener clickListener) {
         this.items = items;
         this.clickListener = clickListener;
@@ -39,7 +40,7 @@ public class HashtagsAdapter extends RecyclerView.Adapter<HashtagsAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Hashtag tweet = items.get(position);
+        CustomTweet tweet = items.get(position);
         holder.setClickListener(tweet, clickListener);
         holder.txtTweet.setText(tweet.getTweetText());
         holder.setItems(tweet.getHashtags());
@@ -50,7 +51,7 @@ public class HashtagsAdapter extends RecyclerView.Adapter<HashtagsAdapter.ViewHo
         return items.size();
     }
 
-    public void setItems(List<Hashtag> newItems) {
+    public void setItems(List<CustomTweet> newItems) {
         items.addAll(newItems);
         notifyDataSetChanged();
     }
@@ -76,7 +77,7 @@ public class HashtagsAdapter extends RecyclerView.Adapter<HashtagsAdapter.ViewHo
             recyclerView.setAdapter(adapter);
         }
 
-        public void setClickListener(final Hashtag tweet,
+        public void setClickListener(final CustomTweet tweet,
                                      final OnItemClickListener listener) {
             view.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -2,6 +2,7 @@ package omarletona.org.twitterclient.images.ui;
 
 import java.util.List;
 
+import omarletona.org.twitterclient.hashtags.entities.CustomTweet;
 import omarletona.org.twitterclient.images.entities.Image;
 
 /**
@@ -14,5 +15,5 @@ public interface ImagesView {
     void hideProgress();
 
     void onError(String error);
-    void setContent(List<Image> items);
+    void setContent(List<CustomTweet> items);
 }

@@ -20,6 +20,7 @@ import omarletona.org.twitterclient.hashtags.HashtagPresenterImpl;
 import omarletona.org.twitterclient.hashtags.HashtagRepository;
 import omarletona.org.twitterclient.hashtags.HashtagRepositoryImpl;
 import omarletona.org.twitterclient.hashtags.adapters.HashtagsAdapter;
+import omarletona.org.twitterclient.hashtags.entities.CustomTweet;
 import omarletona.org.twitterclient.hashtags.entities.Hashtag;
 import omarletona.org.twitterclient.hashtags.ui.HashtagView;
 import omarletona.org.twitterclient.hashtags.ui.OnItemClickListener;
@@ -40,8 +41,8 @@ public class HashtagModule {
 
     @Provides
     @Singleton
-    List<Hashtag> provideItems() {
-        return new ArrayList<Hashtag>();
+    List<CustomTweet> provideItems() {
+        return new ArrayList<CustomTweet>();
     }
 
     @Provides
@@ -51,7 +52,7 @@ public class HashtagModule {
     }
 
     @Provides
-    HashtagsAdapter provideAdapter(List<Hashtag> items, OnItemClickListener clickListener) {
+    HashtagsAdapter provideAdapter(List<CustomTweet> items, OnItemClickListener clickListener) {
         return new HashtagsAdapter(items, clickListener);
     }
 
